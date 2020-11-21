@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap');
+::selection {
+  background: purple;
+  color: white;
+}
+body{
+	margin: 0;
+	padding: 0;
+}
+.page-wrap{
+	width: 100% !important;
+	margin-bottom: 1em;
+	font-family: 'Alef', sans-serif !important;
+}
+.nav-div{
+	margin: 0 auto;
+	display: flex;
+	width: 50%;
+	justify-content: space-between;
+	text-align: center;
+    align-items: center;
+}
+.nav-div button{
+	border: none;
+	outline: none;
+	font-weight: bold;
+	background: #ccc;
+	width: 2em;
+	height: 2em;
+	cursor: pointer;
+}
+.table-wrap{
+	max-width: 90vw;
+	max-height: 80vh;
+	margin: 0 auto;
+	overflow: auto;
+	border: 2px solid black;
+}
+.reconcile-table{
+	border-collapse: collapse;
+}
+.reconcile-table th, .reconcile-table td{
+	vertical-align: top;
+	border-right: 2px solid black;
+	border-left: 2px solid black;
+}
+.reconcile-table thead tr{
+	border-bottom: 2px solid black;
+}
+.reconcile-table tbody{
+}
+.reconcile-table tbody tr{
+	background: #cfe;
+}
+.reconcile-table tbody tr:nth-child(even){
+	background: #9dd;
+}
+.reconciled{
+	max-height: 30vh;
+	overflow-y: auto;
+}
+.user-answer{
+	max-height: 60vh;
+	overflow-y: auto;
+}
+.reconciled, .user-answer {
+	width: 25em;
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+}
+.block{
+	margin: 0.25em;
+	border: 2px solid black;
+	background-color: #ddd;
+	cursor: pointer;
+}
+.reconciled .block:not(.focused):hover{
+	background-color: #ccc;
+}
+.block.focused{
+	background-color: #fb0;
+	box-shadow: 0 0 6px yellow;
+}
+.property{
+	display: flex;
+	flex-direction: row;
+    justify-content: space-between;
+    padding-right: 0.25em;
+	text-align: right
+}
+.user-answer .property.committed{
+	background-color: #cfc;
+}
+.user-answer .property:not(.committed){
+	background-color: #fcc;
+}
+.property label{
+	color: #555;
+	font-weight: bold;
+}
+.reconcile-table:not(.focus-mode) .user-answer .block:hover{
+	background-color: #60c0e6;
+}
+.reconcile-table:not(.focus-mode) .user-answer .block:active{
+	background-color: #009ddb;
+}
+.reconcile-table:not(.focus-mode) .user-answer .block:hover .property{
+	background-color: transparent;
+}
+.reconcile-table.focus-mode .user-answer .property:hover{
+	background-color: #60c0e6;
+}
+.reconcile-table.focus-mode .user-answer .property:active{
+	background-color: #009ddb;
+}
+.tag-selector{
+	margin: 0 auto;
+    width: 90vw;
+    padding: 1em 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.tag-selector input{
+    height: 1.75em;
+}
+.tag{
+	padding-right: 0.5em;
+    border-radius: 0.2em;
+    background: #ddd;
+    margin: 0 0.5em;
+	margin-bottom: 0.5em;
+    height: 1.5em;
+}
+.tag button{
+	border: none;
+	outline: none;
+	background: none;
+	font-weight: bold;
+	cursor: pointer;
+	height: 100%;
+    border-radius: 0.2em;
+}
+.tag button:hover{
+	background: #bbb;
+}
+.tag button:active{
+	background: #aaa;
+}
+.excel-export{
+	margin: 0 auto;
+	width: fit-content;
+	display: block;
+	padding: 0.5em 1em;
+	background-color: green;
+	color: white;
+	font-size: 1.5em;
+	font-weight: bold;
+	cursor: pointer;
+}
+.excel-export:hover{
+	background-color: #060;
+}
+.excel-export:active{
+	background-color: #040;
+}
+
+
+/***********************************************************/
+/***********************************************************/
+/***********************************************************/
+
+
+.flag-manager{
+	display: flex;
+	margin: 2em auto;
+	width: max-content;
+}
+
+.flags-wrap{
+	margin: 0 2em;
+}
+
+.flags-title{
+	padding: 0 2em;
+	background-color: purple;
+	color: white;
+}
+
+.doc-table-wrap table{
+	border-collapse: collapse;
+	border: 1px solid black;
+	width: 80%;
+    margin: 2em auto;
+}
+.doc-table-wrap thead{
+	background:purple;
+	color: #dff;
+}
+.doc-table-wrap tr{
+	border: 1px solid black;
+}
+.doc-table-wrap tbody td{
+	cursor: pointer;
+	background: #eef;
+}
+.doc-table-wrap tbody td:hover{
+	filter: brightness(80%);
+}

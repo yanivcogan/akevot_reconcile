@@ -1,0 +1,41 @@
+<div>
+<div class="flag-manager">
+<div class="raised-flags-wrap flags-wrap" dir="rtl">
+	<div class="flags-title">include flags</div>
+	<div class="raised-flag" ng-repeat="f in flags">
+		<input
+			type="checkbox"
+			ng-model="raised_flags[f]"
+			ng-change="getDocs()"
+			id="{{'raised_flag_'+f}}"/>
+		<label for="{{'raised_flag_'+f}}">{{f}}</label>
+	</div>
+</div>
+<div class="unraised-flags-wrap flags-wrap" dir="rtl">
+	<div class="flags-title">exclude flags</div>
+	<div class="unraised-flag" ng-repeat="f in flags">
+		<input
+			type="checkbox"
+			ng-model="unraised_flags[f]"
+			ng-change="getDocs()"
+			id="{{'unraised_flag_'+f}}"/>
+		<label for="{{'unraised_flag_'+f}}">{{f}}</label>
+	</div>
+</div>
+</div>
+<div class="doc-table-wrap">
+<table>
+<thead>
+<tr>
+	<td>כותרת</td>
+</tr>
+</thead>
+<tbody>
+<tr ng-repeat="d in docs" ng-click="goToPage(d.id)">
+	<td>{{d.title}}</td>
+<tr>
+</tbody>
+</table>
+</div>
+<div class="excel-export">ייצוא לאקסל</div>
+</div>

@@ -1,0 +1,65 @@
+<div ng-repeat="(i,d) in documents">
+	<div class="nav-div">
+	<button type="button">&lt;</button>
+	<h2>document #{{d.id}}</h2>
+	<button type="button">&gt;</button>
+	</div>
+	<div class="table-wrap">
+	<table class="reconcile-table" ng-class="{'focus-mode':focusedBlock}">
+	<thead ng-click="unsetBlockFocus()">
+	<tr>
+		<th ng-repeat="(k, q) in d.annotations">
+			<div dir="ltr">
+			{{q.label}}
+			</div>
+		</th>
+	</tr>
+	<tr>
+		<th ng-repeat="(k, q) in d.annotations">
+		<div class="reconciled">
+		<div class="block" tabindex="{{(i+1)*(k+1)*(l+1)}}" ng-repeat="(l, a) in q.reconciled track by l"
+		ng-click="a.isFocused?unsetBlockFocus():setBlockFocus(i, k, l); $event.stopPropagation();"
+		ng-keyup="oncommittedBlockKeyup($event, i, k, l)"
+		ng-class="{'focused':a.isFocused}">
+		<div class="property" ng-repeat="(m, key) in objectKeys(a)">
+		<label>{{key}}</label>
+		<input type="text" ng-model="a[key]"}
+		ng-keyup="$event.stopPropagation();"
+		/>
+		</div>
+		</div>
+		</div>
+		</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat="(j, u) in d.users">
+		<td ng-repeat="(k, q) in d.annotations">
+		<div class="user-answer">
+		<div class="block" ng-repeat="(l, a) in q.answers[u].answers"
+			ng-click="focusedBlock?null:commitBlock(i, k, a)">
+		<div class="property" ng-repeat="(m, key) in objectKeys(a['ans'])"
+			ng-click="focusedBlock?transferProperty(u, k, l, key, $event):null;"
+			ng-class="{'committed':isCommitted(q, a['ans'], key)}">
+		<label>{{key}}</label>
+		<div>{{a['ans'][key]}}</div>
+		</div>
+		</div>
+		</div>
+		</td>
+	</tr>
+	</tbody>
+	</table>
+	</div>
+	<div class="tag-selector">
+		<span>בחירת נושאים:</span>
+		<input type="text" list="tags" ng-model="currTag.name" ng-change="tags.indexOf(currTag.name)!==-1?addTag():null" ng-keyup="$event.keyCode===13&&currTag.name&&currTag.name.length?addTag():null"/>
+		<datalist id="tags">
+			<option ng-repeat="t in tags" value="{{t}}">
+		</datalist>
+		<div ng-repeat="(i, t) in selectedTags" class="tag">
+			<span>{{t}}</span>
+			<button type="button" ng-click="removeTag(i)">X</button>
+		</div>
+	</div>
+</div>
