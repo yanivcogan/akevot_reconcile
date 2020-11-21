@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 29, 2020 at 12:41 PM
+-- Generation Time: Nov 21, 2020 at 11:26 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -33,9 +33,24 @@ CREATE TABLE IF NOT EXISTS `docs` (
   `id` varchar(11) NOT NULL,
   `title` varchar(1000) NOT NULL,
   `upload_date` date NOT NULL,
-  `original_json` text NOT NULL,
-  `adjusted_json` text,
+  `original_json` mediumtext NOT NULL,
+  `adjusted_json` mediumtext,
   `status` enum('PENDING','FINISHED','INPROGRESS','SKIP') NOT NULL DEFAULT 'PENDING',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `flags`
+--
+
+DROP TABLE IF EXISTS `flags`;
+CREATE TABLE IF NOT EXISTS `flags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `flag` varchar(100) NOT NULL,
+  `set_date` date NOT NULL,
+  `doc_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
