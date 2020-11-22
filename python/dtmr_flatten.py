@@ -23,11 +23,53 @@ flags = [
         "tester": flag_functions.flag_retired
     },
     {
+        "flag": "suggested_title",
+        "q": "is_title?",
+        "f": "is_title",
+        "ans": "no",
+        "tester": flag_functions.flag_on_answer
+    },
+    {
+        "flag": "missing_title",
+        "q": "title",
+        "tester": flag_functions.flag_on_no_answers
+    },
+    {
+        "flag": "inconclusive_title",
+        "q": "title",
+        "tester": flag_functions.flag_on_multiple_answers
+    },
+    {
         "flag": "implicit_date",
         "q": "is_date?",
         "f": "is_date",
         "ans": "infer",
         "tester": flag_functions.flag_on_answer
+    },
+    {
+        "flag": "inconclusive_day",
+        "q": "day",
+        "tester": flag_functions.flag_on_multiple_answers
+    },
+    {
+        "flag": "inconclusive_month",
+        "q": "month",
+        "tester": flag_functions.flag_on_multiple_answers
+    },
+    {
+        "flag": "inconclusive_year",
+        "q": "year",
+        "tester": flag_functions.flag_on_multiple_answers
+    },
+    {
+        "flag": "standout_location",
+        "q": "locations_list",
+        "tester": flag_functions.flag_on_standout_answers
+    },
+    {
+        "flag": "missing_summary",
+        "q": "summary",
+        "tester": flag_functions.flag_on_no_answers
     }
 ]
 questions = {

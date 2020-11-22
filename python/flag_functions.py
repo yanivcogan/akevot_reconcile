@@ -32,11 +32,14 @@ def flag_on_standout_answers(doc, q):
     cluster_users = {}
     users = []
     for u in doc['annotations'][q]['answers']:
-        users.append(u["user"])
-        for a in u['answers']:
+        users.append(u)
+        for a in doc['annotations'][q]['answers'][u]['answers']:
             if a['cluster_index'] not in cluster_users:
                 cluster_users[a['cluster_index']] = []
-            cluster_users[a['cluster_index']].append([u["user"]])
+            if u not in cluster_users[a['cluster_index']]:
+                cluster_users[a['cluster_index']].append(u)
+    if len(users) < RETIRED_ANS_COUNT:
+        return False
     for u in users:
         answer_only_supplied_by_u = False
         answer_supplied_by_everyone_but_u = False
