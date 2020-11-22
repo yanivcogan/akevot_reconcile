@@ -9,7 +9,7 @@ function($scope, $stateParams, $rootScope, $state, server) {
 	$scope.documents = [];
 	server.requestPhp({id: $stateParams["docId"]}, 'get_doc').then(function (data) {
 		$scope.documents.push(JSON.parse(data.json));
-		debugger;
+		//debugger;
 	});
 	$scope.setBlockFocus=function(d, q, b){
 		$scope.unsetBlockFocus();
@@ -37,14 +37,14 @@ function($scope, $stateParams, $rootScope, $state, server) {
 	$scope.transferProperty=function(u, q, a, key, $event){
 		let focused = $scope.focusedBlock
 		$scope.documents[focused.d].annotations[focused.q].reconciled[focused.b][key]=
-		$scope.documents[focused.d].annotations[q].answers[u].answers[a][key];
+		$scope.documents[focused.d].annotations[q].answers[u].answers[a].ans[key];
 		$scope.unsetBlockFocus();
 		if($event){
 			$event.stopPropagation();
 		}
 	}
 	$scope.commitBlock=function(d, k, a){
-		$scope.documents[d].annotations[k].reconciled.push(JSON.parse(JSON.stringify(a)));
+		$scope.documents[d].annotations[k].reconciled.push(JSON.parse(JSON.stringify(a.ans)));
 	}
 	$scope.oncommittedBlockKeyup=function($event, d, q, a){
 		if($event && $event.keyCode===46){
