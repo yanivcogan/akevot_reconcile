@@ -16,7 +16,7 @@ ExactScore = namedtuple('ExactScore', 'value count')
 
 # removes punctuation, whitespaces, Yud and Vav from a string
 def clean_ans(a):
-    return re.sub(r'[\-\'\"\s.?!`()#%*&יו]', '', str(a))
+    return re.sub(r'[\-\'\"\s.?!`()#%*&יהו]', '', str(a))
 
 
 # return True IFF the given object is empty or has length 0
