@@ -8,7 +8,9 @@
 			ng-model="raised_flags[f]"
 			ng-change="getDocs()"
 			id="{{'raised_flag_'+f}}"/>
-		<label for="{{'raised_flag_'+f}}">{{f}}</label>
+		<label for="{{'raised_flag_'+f}}">{{
+			flag_count[f]?(f+" "+flag_count[f]):(f+" 0");
+		}}</label>
 	</div>
 </div>
 <div class="unraised-flags-wrap flags-wrap" dir="rtl">

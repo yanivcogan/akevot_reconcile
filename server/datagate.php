@@ -20,6 +20,17 @@ ini_set("log_errors", 1);
 $db = new Db("localhost","document_reconciliation","root","","");
 
 switch ($type) {
+	case "flag_count" :
+		$ans = $db->smartQuery(array(
+			'sql' => "
+			SELECT f.flag, COUNT(DISTINCT f.doc_id) AS count
+			FROM flags AS f
+			GROUP BY f.flag
+			",
+			'par' => array(),
+			'ret' => 'all'
+		));
+		break;
 	case "list_docs" :
 		$raised = $data->raised;
 		$unraised = $data->unraised;

@@ -9,6 +9,8 @@ import merge_functions
 import flag_functions
 
 csv.field_size_limit(sys.maxsize)
+test = sys.maxsize
+
 
 # File location section:
 directory = './data'  # modify this to match your directory structure including file names

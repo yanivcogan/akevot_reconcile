@@ -4,6 +4,7 @@ function($scope, $stateParams, $rootScope, $state, server){
 	$scope.raised_flags = {};
 	$scope.unraised_flags = {};
 	$scope.docs = []
+	$scope.flag_count = {}
 	$scope.getDocs = function(){
 		let raised = [];
 		let unraised = [];
@@ -20,6 +21,12 @@ function($scope, $stateParams, $rootScope, $state, server){
 		let data = {raised:raised, unraised:unraised};
 		server.requestPhp(data, 'list_docs').then(function (data) {
 			$scope.docs = data;
+		});
+		server.requestPhp({}, 'flag_count').then(function (data) {
+			console.log(data);
+			data.forEach(f=>{
+				$scope.flag_count[f.flag]=f.count;
+			});
 		});
 	}
 	$scope.getDocs();
