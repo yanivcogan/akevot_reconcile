@@ -21,6 +21,7 @@ def save_docs(doc_id, content, title):
                 docs (`id`, `title`, `upload_date`, `original_json`)
                 VALUES (%s, %s, %s, %s)
                 ON DUPLICATE KEY UPDATE
+                `title` = VALUES(`title`),
                 `original_json` = VALUES(`original_json`)"""
     val = (doc_id, title, now, content)
     my_cursor.execute(sql, val)
@@ -30,6 +31,8 @@ def save_flags(doc_id, flags):
     if suppress_db:
         return
     now = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())
+    sql = """DELETE FROM flags WHERE `doc_id` = %s;"""
+    my_cursor.execute(sql, (doc_id,))
     for f in flags:
         sql = """INSERT INTO
                     flags (`doc_id`, `flag`, `set_date`)
