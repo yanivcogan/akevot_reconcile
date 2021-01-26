@@ -55,7 +55,7 @@ function($scope, $stateParams, $rootScope, $state, server) {
 		}
 	}
 	$scope.isCommitted=function(q, a, key){
-		const relevantAnswers = q.reconciled.filter(ans=>ans[key]===a[key]);
+		const relevantAnswers = q.reconciled.filter(ans=>ans[key].trim()===a[key].trim());
 		return relevantAnswers.length;
 	}
 	$scope.addTag=function(){
