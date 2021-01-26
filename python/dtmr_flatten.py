@@ -86,7 +86,7 @@ questions = {
             ]
         ],
         'fields': ['is_title'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'title': {
@@ -101,7 +101,7 @@ questions = {
             ]
         ],
         'fields': ['title'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty,
         'cluster_filter': merge_functions.cluster_filter_most_common
     },
@@ -116,7 +116,7 @@ questions = {
             ]
         ],
         'fields': ['is_date'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'day': {
@@ -130,7 +130,7 @@ questions = {
             ]
         ],
         'fields': ['day'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'month': {
@@ -144,7 +144,7 @@ questions = {
             ]
         ],
         'fields': ['month'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'year': {
@@ -158,7 +158,7 @@ questions = {
             ]
         ],
         'fields': ['year'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'doc_type': {
@@ -172,7 +172,7 @@ questions = {
             ]
         ],
         'fields': ['doc_type'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'author_list': {
@@ -200,7 +200,7 @@ questions = {
             ]
         ],
         'fields': ['first_name', 'last_name', 'role', 'admin'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'recipient_list': {
@@ -228,7 +228,7 @@ questions = {
             ]
         ],
         'fields': ['first_name', 'last_name', 'role', 'admin'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'c_c_list': {
@@ -256,7 +256,7 @@ questions = {
             ]
         ],
         'fields': ['first_name', 'last_name', 'role', 'admin'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'participant_list': {
@@ -284,7 +284,7 @@ questions = {
             ]
         ],
         'fields': ['first_name', 'last_name', 'role', 'admin'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'author_no_rep_list': {
@@ -312,7 +312,7 @@ questions = {
             ]
         ],
         'fields': ['first_name', 'last_name', 'role', 'admin'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'names_list': {
@@ -332,7 +332,7 @@ questions = {
             ]
         ],
         'fields': ['first_name', 'last_name'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'institution_list': {
@@ -346,7 +346,7 @@ questions = {
             ]
         ],
         'fields': ['institution'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'locations_list': {
@@ -360,7 +360,7 @@ questions = {
             ]
         ],
         'fields': ['location'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
     'summary': {
@@ -374,7 +374,7 @@ questions = {
             ]
         ],
         'fields': ['summary'],
-        'merge': merge_functions.merge_select_longest_per_property,
+        'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
 }

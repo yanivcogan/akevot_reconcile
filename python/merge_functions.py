@@ -130,6 +130,35 @@ def merge_select_longest_per_property(c, q):
     return merged
 
 
+def return_most_common(arr):
+    instance_count = {}
+    for a in arr:
+        if a not in instance_count:
+            instance_count[a] = 0
+        instance_count[a] += 1
+    max_instances = max(instance_count.values())
+    result = []
+    for a in arr:
+        if instance_count[a] == max_instances:
+            result.append(a)
+    return result
+
+
+# given a set of answers that were determined to be similar enough to warrant a merge, return a synthesized answer made
+# out of the most common answer per property field, and the longest answer per property/field as a tie breaker
+def merge_select_most_common_per_property(c, q):
+    merged = {}
+    for f in q['fields']:
+        property_suggestions = [x[f].strip() for x in c]
+        property_suggestions = return_most_common(property_suggestions)
+        ans = ""
+        for a in property_suggestions:
+            if len(str(a)) > len(str(ans)):
+                ans = str(a)
+        merged[f] = ans
+    return merged
+
+
 def top_partial_ratio(group, user_weights):
     """Return the best partial ratio match from fuzzywuzzy module."""
     scores = []
