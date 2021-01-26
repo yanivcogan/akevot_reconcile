@@ -1,6 +1,6 @@
 app.controller('list', ['$scope', '$stateParams', '$rootScope', '$state', 'server',
 function($scope, $stateParams, $rootScope, $state, server){
-	$scope.flags = ["retired", "suggested_title", "missing_title", "inconclusive_title", "implicit_date", "inconclusive_day", "inconclusive_month", "inconclusive_year", "standout_location", "missing_summary"];
+	$scope.flags = ["retired", "suggested_title", "missing_title", "inconclusive_title", "implicit_date", "inconclusive_date", "standout_location", "missing_summary"];
 	$scope.raised_flags = {};
 	$scope.unraised_flags = {};
 	$scope.docs = []

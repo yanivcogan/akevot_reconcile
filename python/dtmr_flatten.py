@@ -49,17 +49,17 @@ flags = [
         "tester": flag_functions.flag_on_answer
     },
     {
-        "flag": "inconclusive_day",
+        "flag": "inconclusive_date",
         "q": "day",
         "tester": flag_functions.flag_on_multiple_answers
     },
     {
-        "flag": "inconclusive_month",
+        "flag": "inconclusive_date",
         "q": "month",
         "tester": flag_functions.flag_on_multiple_answers
     },
     {
-        "flag": "inconclusive_year",
+        "flag": "inconclusive_date",
         "q": "year",
         "tester": flag_functions.flag_on_multiple_answers
     },
