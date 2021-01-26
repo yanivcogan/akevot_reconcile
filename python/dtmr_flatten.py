@@ -875,6 +875,8 @@ for doc in classifications:
         # merge answers here
         for c_i in clusters_to_keep:
             c = reconciled['annotations'][q]['clusters'][c_i]
+            if q == "title":
+                title = reconciled['annotations'][q]['clusters'][c_i][0]['title']
             cluster_merge = questions[q]['merge'](c, questions[q])
             reconciled['annotations'][q]['reconciled'].append(cluster_merge)
         del reconciled['annotations'][q]['clusters']
