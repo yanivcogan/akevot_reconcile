@@ -12,6 +12,9 @@ body{
 	margin-bottom: 1em;
 	font-family: 'Alef', sans-serif !important;
 }
+textarea, input{
+	font-family: 'Alef', sans-serif !important;
+}
 .nav-div{
 	margin: 0 auto;
 	display: flex;
@@ -48,6 +51,7 @@ body{
 	border-bottom: 2px solid black;
 }
 .reconcile-table tbody{
+
 }
 .reconcile-table tbody tr{
 	background: #cfe;
@@ -90,14 +94,24 @@ body{
 	text-align: right
 }
 .user-answer .property.committed{
-	background-color: #cfc;
+	background-color: #f0ffff;
 }
 .user-answer .property:not(.committed){
-	background-color: #fcc;
+	background-color: #dad0d0;
+	color: #555;
 }
-.property label{
+.property label.property-label{
 	color: #555;
 	font-weight: bold;
+	width: 25%;
+}
+.property .property-value, .property .property-input{
+	width: 75%;
+}
+.property textarea.property-input {
+    height: 10em;
+    resize: none;
+	padding: 1px 2px;
 }
 .reconcile-table:not(.focus-mode) .user-answer .block:hover{
 	background-color: #60c0e6;

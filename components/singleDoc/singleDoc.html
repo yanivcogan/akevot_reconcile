@@ -21,10 +21,13 @@
 	ng-keyup="oncommittedBlockKeyup($event, k, l)"
 	ng-class="{'focused':a.isFocused}">
 	<div class="property" ng-repeat="(m, key) in objectKeys(a)">
-	<label>{{key}}</label>
-	<input type="text" ng-model="a[key]"}
+	<label class="property-label">{{key}}</label>
+	<input ng-if="!textareaFields.has(q.label)" class="property-input" type="text" ng-model="a[key]"}
 	ng-keyup="$event.stopPropagation();"
 	/>
+	<textarea ng-if="textareaFields.has(q.label)" class="property-input" type="text" ng-model="a[key]"}
+	ng-keyup="$event.stopPropagation();"
+	></textarea>
 	</div>
 	</div>
 	</div>
@@ -38,10 +41,10 @@
 	<div class="block" ng-repeat="(l, a) in q.answers[u].answers"
 		ng-click="focusedBlock?null:commitBlock(k, a)">
 	<div class="property" ng-repeat="(m, key) in objectKeys(a['ans'])"
-		ng-click="focusedBlock?transferProperty(u, k, l, key, $event):null;"
+		ng-click="(focusedBlock && (focusedBlock.q === k))?transferProperty(u, k, l, key, $event):null;"
 		ng-class="{'committed':isCommitted(q, a['ans'], key)}">
-	<label>{{key}}</label>
-	<div>{{a['ans'][key]}}</div>
+	<label class="property-label">{{key}}</label>
+	<div class="property-value">{{a['ans'][key]}}</div>
 	</div>
 	</div>
 	</div>

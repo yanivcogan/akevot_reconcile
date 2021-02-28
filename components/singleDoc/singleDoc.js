@@ -12,6 +12,7 @@ function($scope, $stateParams, $rootScope, $state, server) {
 		{val:"FINISHED", label:"הושלם"},
 		{val:"INPROGRESS", label:"נותרה עבודה"}
 	];
+	$scope.textareaFields = new Set(["summary"]);
 	//the "title" attribute is the second in the array
 	$scope.title_index = 1;
 	server.requestPhp({id: $stateParams["docId"]}, 'get_doc').then(function (data) {
