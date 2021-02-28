@@ -34,7 +34,6 @@ textarea, input{
 }
 .table-wrap{
 	max-width: 90vw;
-	max-height: 80vh;
 	margin: 0 auto;
 	overflow: auto;
 	border: 2px solid black;
@@ -46,12 +45,18 @@ textarea, input{
 	vertical-align: top;
 	border-right: 2px solid black;
 	border-left: 2px solid black;
+	width: 25em;
+}
+.reconcile-table thead{
+	display: block;
 }
 .reconcile-table thead tr{
 	border-bottom: 2px solid black;
 }
 .reconcile-table tbody{
-
+	max-height: 50vh;
+	overflow: auto;
+	display: block;
 }
 .reconcile-table tbody tr{
 	background: #cfe;
