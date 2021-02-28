@@ -11,7 +11,7 @@ function($scope, $stateParams, $rootScope, $state, server) {
 		{val:"PENDING", label:"חדש"},
 		{val:"FINISHED", label:"הושלם"},
 		{val:"INPROGRESS", label:"נותרה עבודה"}
-	]
+	];
 	//the "title" attribute is the second in the array
 	$scope.title_index = 1;
 	server.requestPhp({id: $stateParams["docId"]}, 'get_doc').then(function (data) {

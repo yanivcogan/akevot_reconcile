@@ -1,13 +1,25 @@
 app.controller('list', ['$scope', '$stateParams', '$rootScope', '$state', 'server',
 function($scope, $stateParams, $rootScope, $state, server){
 	$scope.flags = ["retired", "suggested_title", "missing_title", "inconclusive_title", "implicit_date", "inconclusive_date", "standout_location", "missing_summary"];
+	$scope.docStatusOptions = [
+		{val:"PENDING", label:"חדש", selected: true},
+		{val:"FINISHED", label:"הושלם", selected: false},
+		{val:"INPROGRESS", label:"נותרה עבודה", selected: true}
+	];
 	$scope.raised_flags = {};
 	$scope.unraised_flags = {};
+	$scope.selected_filters = {};
 	$scope.docs = []
 	$scope.flag_count = {}
 	$scope.getDocs = function(){
 		let raised = [];
 		let unraised = [];
+		let statuses = [];
+		$scope.docStatusOptions.forEach(s=>{
+			if(s.selected){
+				statuses.push(s.val);
+			}
+		});
 		Object.keys($scope.raised_flags).forEach((f)=>{
 			if($scope.raised_flags[f]){
 				raised.push(f);
@@ -18,7 +30,7 @@ function($scope, $stateParams, $rootScope, $state, server){
 				unraised.push(f);
 			}
 		})
-		let data = {raised:raised, unraised:unraised};
+		let data = {raised, unraised, statuses};
 		server.requestPhp(data, 'list_docs').then(function (data) {
 			$scope.docs = data;
 		});

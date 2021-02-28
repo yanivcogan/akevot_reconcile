@@ -1,7 +1,20 @@
 <div>
 <div class="flag-manager">
+<div class="doc-status-wrap flags-wrap" dir="rtl">
+	<div class="flags-title">סטטוס המסמך</div>
+	<div class="raised-flag" ng-repeat="(i, s) in docStatusOptions">
+		<input
+			type="checkbox"
+			ng-model="docStatusOptions[i].selected"
+			ng-change="getDocs()"
+			id="{{'doc_status_'+s[i].val}}"/>
+		<label for="{{'doc_status_'+s[i].val}}">{{
+			s.label
+		}}</label>
+	</div>
+</div>
 <div class="raised-flags-wrap flags-wrap" dir="rtl">
-	<div class="flags-title">include flags</div>
+	<div class="flags-title">רק עם הדגלים</div>
 	<div class="raised-flag" ng-repeat="f in flags">
 		<input
 			type="checkbox"
@@ -14,7 +27,7 @@
 	</div>
 </div>
 <div class="unraised-flags-wrap flags-wrap" dir="rtl">
-	<div class="flags-title">exclude flags</div>
+	<div class="flags-title">בלי הדגלים</div>
 	<div class="unraised-flag" ng-repeat="f in flags">
 		<input
 			type="checkbox"

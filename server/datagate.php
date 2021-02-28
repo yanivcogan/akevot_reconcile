@@ -34,6 +34,7 @@ switch ($type) {
 	case "list_docs" :
 		$raised = $data->raised;
 		$unraised = $data->unraised;
+		$statuses = $data->statuses;
 		$params = array();
 		$query = "
 			SELECT docs.id, docs.title
@@ -79,6 +80,18 @@ switch ($type) {
 			WHERE
 				(".(count($raised) > 0 ? "FALSE" : "TRUE") ." OR raised_flags.count > 0) AND
 				(".(count($unraised) > 0 ? "FALSE" : "TRUE") ." OR (IFNULL(unraised_flags.count, 0) < 1))";
+		if(count($statuses) > 0){
+			$query.=" AND
+					docs.status IN (";
+			for($i = 0; $i < count($statuses); $i++){
+				$query .= ":status_".$i;
+				if($i < count($statuses) - 1){
+					$query .= ", ";
+				}
+				$params["status_".$i] = $statuses[$i];
+			}
+			$query.=")";
+		}
 		
 		$ans = $db->smartQuery(array(
 			'sql' => $query,
