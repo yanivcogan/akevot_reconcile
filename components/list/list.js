@@ -11,10 +11,19 @@ function($scope, $stateParams, $rootScope, $state, server){
 	$scope.selected_filters = {};
 	$scope.docs = []
 	$scope.flag_count = {}
+	$scope.search = {term: ""}
+	$scope.initializeSearch = function(){
+		$scope.search.term = $stateParams.search?$stateParams.search:"";
+		$scope.raised_flags = $stateParams.raised?JSON.parse($stateParams.raised):{};
+		$scope.unraised_flags = $stateParams.unraised?JSON.parse($stateParams.unraised):{};
+		const statuses = $stateParams.statuses?JSON.parse($stateParams.statuses):{};
+	}
+	$scope.initializeSearch();
 	$scope.getDocs = function(){
 		let raised = [];
 		let unraised = [];
 		let statuses = [];
+		let search = $scope.search.term;
 		$scope.docStatusOptions.forEach(s=>{
 			if(s.selected){
 				statuses.push(s.val);
@@ -30,7 +39,16 @@ function($scope, $stateParams, $rootScope, $state, server){
 				unraised.push(f);
 			}
 		})
-		let data = {raised, unraised, statuses};
+		$state.go('.', {
+			search : search,
+			raised : JSON.stringify($scope.raised_flags),
+			unraised : JSON.stringify($scope.unraised_flags),
+			statuses : JSON.stringify(statuses)
+		},
+		{
+			notify: false
+		});
+		let data = {raised, unraised, statuses, search};
 		server.requestPhp(data, 'list_docs').then(function (data) {
 			$scope.docs = data;
 		});

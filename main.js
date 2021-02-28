@@ -12,12 +12,13 @@ app.config(function ($stateProvider, $urlRouterProvider, $compileProvider) {
 		}
 	})
 	.state('list', {
-		url: '/list',
+		url: '/list?:search&:raised&:unraised&:statuses',
 		views: {
 			"main": {
 				controller: 'list',
 				templateUrl: './components/list/list.html'
 			}
-		}
+		},
+		reloadOnSearch: false
 	})
 });

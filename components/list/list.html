@@ -1,6 +1,16 @@
 <div>
 <div class="flag-manager">
 <div class="doc-status-wrap flags-wrap" dir="rtl">
+	<div class="flags-title">חיפוש</div>
+	<div class="raised-flag">
+		<input
+			type="text"
+			ng-model="search.term"
+			ng-keydown="$event.keyCode === 13 && getDocs()"
+			id="doc_search"/>
+	</div>
+</div>
+<div class="doc-status-wrap flags-wrap" dir="rtl">
 	<div class="flags-title">סטטוס המסמך</div>
 	<div class="raised-flag" ng-repeat="(i, s) in docStatusOptions">
 		<input

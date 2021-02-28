@@ -35,9 +35,10 @@ switch ($type) {
 		$raised = $data->raised;
 		$unraised = $data->unraised;
 		$statuses = $data->statuses;
+		$search = $data->search;
 		$params = array();
 		$query = "
-			SELECT docs.id, docs.title
+			SELECT docs.id, docs.title,IFNULL(adjusted_json, original_json) AS json
 			FROM docs
 			LEFT JOIN (
 				SELECT d.id AS id, count(f.id) AS count
@@ -93,11 +94,26 @@ switch ($type) {
 			$query.=")";
 		}
 		
-		$ans = $db->smartQuery(array(
+		$docs = $db->smartQuery(array(
 			'sql' => $query,
 			'par' => $params,
 			'ret' => 'all'
 		));
+		$ans = array();
+		$search_params = explode(" ", $search);
+		for($i = 0; $i < count($docs); $i++){
+			$doc = json_encode(json_decode($docs[$i]["json"]), JSON_UNESCAPED_UNICODE );
+			$include_doc = true;
+			foreach ($search_params as $key => $term){
+				if($term && strlen($term) && !strpos($doc, $term)){
+					$include_doc = false;
+				}
+			}
+			if($include_doc){
+				$doc_res = array("id" => $docs[$i]["id"],"title" => $docs[$i]["title"]);
+				array_push($ans, $doc_res);
+			}
+		}
 		break;
 	case "get_doc" :
 		$ans = $db->smartQuery(array(
