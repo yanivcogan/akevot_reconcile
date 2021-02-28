@@ -88,9 +88,18 @@ switch ($type) {
 		break;
 	case "get_doc" :
 		$ans = $db->smartQuery(array(
-			'sql' => "SELECT id, title, original_json AS json FROM docs WHERE id = :id",
+			'sql' => "SELECT id, title, original_json, status, IFNULL(adjusted_json, original_json) AS json FROM docs WHERE id = :id",
 			'par' => array('id' => ($data->id)),
 			'ret' => 'assoc'
+		));
+		break;
+	case "save_doc" :
+		$ans = $db->smartQuery(array(
+			'sql' => "UPDATE docs
+			SET title = :title, adjusted_json = :json, status = :status
+			WHERE id = :id",
+			'par' => array('id' => ($data->id),'json' => ($data->json),'status' => ($data->status),'title' => ($data->title)),
+			'ret' => 'res'
 		));
 		break;
 }

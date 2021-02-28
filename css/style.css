@@ -147,6 +147,11 @@ body{
 .tag button:active{
 	background: #aaa;
 }
+.save-wrap{
+	margin: 0 auto;
+    width: 90vw;
+    padding: 1em 0;
+}
 .excel-export{
 	margin: 0 auto;
 	width: fit-content;
