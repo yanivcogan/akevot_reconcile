@@ -1,7 +1,7 @@
 app.controller('singleDoc', ['$scope', '$stateParams', '$rootScope', '$state', 'server',
 function($scope, $stateParams, $rootScope, $state, server) {
 	$scope.objectKeys = (a)=>Object.keys(a).filter(x=>["$$hashKey", "isFocused"].indexOf(x)===-1);
-	$scope.focusedBlock = null;
+	$scope.focusedBlock = {};
 	$scope.currentDocument = 0;
 	$scope.tags = ["תשתיות", "אכיפת חוק", "פשעים","מינויי לתפקיד","השתלטות על שטחים"];
 	$scope.currTag = {};
@@ -27,8 +27,16 @@ function($scope, $stateParams, $rootScope, $state, server) {
 		if($scope.focusedBlock){
 			let old = $scope.focusedBlock;
 			try{
-			$scope.document.data.annotations[old.q].reconciled[old.b].isFocused=false;
+			$scope.document.data.annotations[old.q].reconciled[old.b].isFocused=null;
 			}catch(err){}
+		}
+		$scope.focusedBlock=null;
+	}
+	$scope.unsetAllFocus=function(){
+		for(let i = 0; i < $scope.document.data.annotations.length; i++){
+			for(let j = 0; j < $scope.document.data.annotations[i].reconciled.length; j++){
+				$scope.document.data.annotations[i].reconciled[j].isFocused=null;
+			}
 		}
 		$scope.focusedBlock=null;
 	}
@@ -77,6 +85,7 @@ function($scope, $stateParams, $rootScope, $state, server) {
 		if($scope.saveInProgress){
 			return;
 		}
+		$scope.unsetAllFocus();
 		let title = $scope.document.data.annotations[$scope.title_index].reconciled[0].title;
 		let json = JSON.stringify($scope.document.data);
 		let status = $scope.document.status;
