@@ -69,5 +69,5 @@
 	<label>להחליף את הסטטוס ל</label>
 	<select ng-model="document.status" ng-options="s.val as s.label for s in docStatusOptions"></select>
 	<button type="button" ng-click="saveDoc()">שמירה</button>
-	<p ng-show="saveSuccessful">השמירה הצליחה! מעבר אוטמטי למסמך הבא ייתבצע עוד מעט</p>
+	<span ng-show="saveSuccessful">השמירה הצליחה! מעבר אוטמטי למסמך הבא ייתבצע עוד מעט</span>
 </div>
