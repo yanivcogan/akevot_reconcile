@@ -23,9 +23,10 @@ switch ($type) {
 	case "flag_count" :
 		$ans = $db->smartQuery(array(
 			'sql' => "
-			SELECT f.flag, COUNT(DISTINCT f.doc_id) AS count
+			SELECT f.flag, d.status, COUNT(DISTINCT f.doc_id) AS count
 			FROM flags AS f
-			GROUP BY f.flag
+			LEFT JOIN docs AS d ON f.doc_id = d.id
+			GROUP BY f.flag, d.status
 			",
 			'par' => array(),
 			'ret' => 'all'

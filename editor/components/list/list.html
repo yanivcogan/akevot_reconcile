@@ -17,8 +17,8 @@
 			type="checkbox"
 			ng-model="docStatusOptions[i].selected"
 			ng-change="getDocs()"
-			id="{{'doc_status_'+s[i].val}}"/>
-		<label for="{{'doc_status_'+s[i].val}}">{{
+			id="{{'doc_status_'+s.val}}"/>
+		<label for="{{'doc_status_'+s.val}}">{{
 			s.label
 		}}</label>
 	</div>
@@ -32,7 +32,7 @@
 			ng-change="getDocs()"
 			id="{{'raised_flag_'+f}}"/>
 		<label for="{{'raised_flag_'+f}}">{{
-			flag_count[f]?(f+" "+flag_count[f]):(f+" 0");
+			(f+" "+getFilteredFlagCount(f));
 		}}</label>
 	</div>
 </div>

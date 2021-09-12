@@ -2,9 +2,9 @@ app.factory('server', ['$rootScope', '$http', '$q', '$state', '$timeout', functi
 var timeoutMillis = 5000;
 	return {
 		requestPhp: function (data, type) {
-			var deferred = $q.defer();
-			var httpDetails = {
-				url: "./server/datagate.php?type=" + type,
+			const deferred = $q.defer();
+			const httpDetails = {
+				url: "../server/datagate.php?type=" + type,
 				method: "POST",
 				data: angular.toJson(data),
 				contentType: "application/json",
@@ -19,7 +19,7 @@ var timeoutMillis = 5000;
 			}
 			$http(httpDetails).then(function (json) {
 				deferred.resolve(json.data);
-			})
+			});
 			return deferred.promise;
 		}
 }}]);

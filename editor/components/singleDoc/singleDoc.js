@@ -12,12 +12,23 @@ function($scope, $stateParams, $rootScope, $state, server) {
 		{val:"FINISHED", label:"הושלם"},
 		{val:"INPROGRESS", label:"נותרה עבודה"}
 	];
-	$scope.textareaFields = new Set(["summary"]);
+	$scope.textareaFields = new Set(["summary", "title"]);
 	//the "title" attribute is the second in the array
 	$scope.title_index = 1;
-	server.requestPhp({id: $stateParams["docId"]}, 'get_doc').then(function (data) {
+	$scope.docId = $stateParams["docId"];
+
+
+	$scope.saveInProgress = false;
+	$scope.saveSuccessful = false;
+
+	server.requestPhp({id: $scope.docId}, 'get_doc').then(function (data) {
 		$scope.document.data = JSON.parse(data.json);
 		$scope.document.status = data.status === "PENDING" ? "FINISHED" : data.status;
+		window.setTimeout(()=>{
+			document.querySelectorAll("textarea.property-input").forEach(x=>{
+				x.dispatchEvent(new Event('input', { bubbles: true }))
+			})
+		}, 1000)
 	});
 	$scope.setBlockFocus=function(q, b){
 		$scope.unsetBlockFocus();
@@ -42,9 +53,7 @@ function($scope, $stateParams, $rootScope, $state, server) {
 		$scope.focusedBlock=null;
 	}
 	$scope.isBlockFocus=function(q, b){
-		return
-			$scope.focusedBlock.q === q &&
-			$scope.focusedBlock.b === b;
+		return $scope.focusedBlock.q === q && $scope.focusedBlock.b === b;
 	}
 	$scope.onAnswerBlockClick=function(){
 		
@@ -93,7 +102,36 @@ function($scope, $stateParams, $rootScope, $state, server) {
 		$scope.saveInProgress = true;
 		server.requestPhp({id: $stateParams["docId"], title, json, status}, 'save_doc').then(function (data) {
 			$scope.saveInProgress = false;
-			alert("נשמר!");
+			$scope.saveSuccessful = true;
+			window.setTimeout($scope.continueToNextDoc, 1000);
 		});
+	}
+	$scope.continueToNextDoc = function(){
+		if($rootScope.latestQueryResults){
+			const numOfResults = $rootScope.latestQueryResults.length;
+			for(let i = 0; i < numOfResults - 1; i++){
+				if($rootScope.latestQueryResults[i]["id"] === $scope.docId){
+					$state.go('.', {
+						docId : $rootScope.latestQueryResults[i + 1]["id"],
+					});
+					return;
+				}
+			}
+		}
+		$state.go('list', $rootScope.latestQuery);
+	}
+	$scope.continueToPrevDoc = function(){
+		if($rootScope.latestQueryResults){
+			const numOfResults = $rootScope.latestQueryResults.length;
+			for(let i = 1; i < numOfResults; i++){
+				if($rootScope.latestQueryResults[i]["id"] === $scope.docId){
+					$state.go('.', {
+						docId : $rootScope.latestQueryResults[i - 1]["id"],
+					});
+					return;
+				}
+			}
+		}
+		$state.go('list', $rootScope.latestQuery);
 	}
 }]);

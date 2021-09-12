@@ -50,17 +50,7 @@ flags = [
     },
     {
         "flag": "inconclusive_date",
-        "q": "day",
-        "tester": flag_functions.flag_on_multiple_answers
-    },
-    {
-        "flag": "inconclusive_date",
-        "q": "month",
-        "tester": flag_functions.flag_on_multiple_answers
-    },
-    {
-        "flag": "inconclusive_date",
-        "q": "year",
+        "q": "date",
         "tester": flag_functions.flag_on_multiple_answers
     },
     {
@@ -119,45 +109,17 @@ questions = {
         'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
-    'day': {
+    'date': {
         'cmp': [
             [
                 {
-                    'string': lambda x: x['day'],
+                    'string': lambda x: x['date'],
                     'ignore': merge_functions.empty_str_clean,
                     'cmp': merge_functions.field_compare_clean
                 }
             ]
         ],
-        'fields': ['day'],
-        'merge': merge_functions.merge_select_most_common_per_property,
-        'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
-    },
-    'month': {
-        'cmp': [
-            [
-                {
-                    'string': lambda x: x['month'],
-                    'ignore': merge_functions.empty_str_clean,
-                    'cmp': merge_functions.field_compare_clean
-                }
-            ]
-        ],
-        'fields': ['month'],
-        'merge': merge_functions.merge_select_most_common_per_property,
-        'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
-    },
-    'year': {
-        'cmp': [
-            [
-                {
-                    'string': lambda x: x['year'],
-                    'ignore': merge_functions.empty_str_clean,
-                    'cmp': merge_functions.field_compare_clean
-                }
-            ]
-        ],
-        'fields': ['year'],
+        'fields': ['date'],
         'merge': merge_functions.merge_select_most_common_per_property,
         'ignore_ans': merge_functions.ignore_on_all_merge_properties_empty
     },
@@ -341,7 +303,7 @@ questions = {
                 {
                     'string': lambda x: x['institution'],
                     'ignore': merge_functions.empty_str_clean,
-                    'cmp': merge_functions.field_compare_clean
+                    'cmp': merge_functions.field_compare_fuzzy
                 }
             ]
         ],
@@ -354,7 +316,7 @@ questions = {
             [
                 {
                     'string': lambda x: x['location'],
-                    'ignore': merge_functions.empty_str_clean,
+                    'ignore': lambda x: merge_functions.empty_str_clean(x) or (len(x.split(" ")) > 3),
                     'cmp': merge_functions.field_compare_clean
                 }
             ]
@@ -491,22 +453,15 @@ def parse_file():
                 day = ''
                 month = ''
                 year = ''
+                date = ''
                 doc_type = ''
-                authors = ''
                 author_list = []
-                recipients = ''
                 recipient_list = []
-                c_copies = ''
                 c_c_list = []
-                participants = ''
                 participant_list = []
-                no_reps = ''
                 author_no_rep_list = []
-                names = ''
                 names_list = []
-                institutions = 0
                 institution_list = []
-                locations = 0
                 location_list = []
                 summary = ''
 
@@ -560,6 +515,7 @@ def parse_file():
                                         year = combo_task['value'][0]['value']
                             except KeyError:
                                 year = ''
+                    date = str(year) + "-" + str(month) + "-" + str(day)
 
                     # document type?
                     try:
@@ -777,9 +733,7 @@ def parse_file():
                     'is_title?': [{'is_title': is_title}],
                     'title': [{'title': title}],
                     'is_date?': [{'is_date': is_date}],
-                    'day': [{'day': str(day)}],
-                    'month': [{'month': str(month)}],
-                    'year': [{'year': str(year)}],
+                    'date': [{'date': str(date)}],
                     'doc_type': [{'doc_type': doc_type}],
                     'author_list': author_list,
                     'recipient_list': recipient_list,
