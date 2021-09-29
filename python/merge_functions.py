@@ -113,7 +113,7 @@ def cluster_filter_most_common(clusters):
 
 
 # returns True IFF the strings have a token set ration higher than the threshold
-def field_compare_fuzzy(a, b, fuzzy_threshold):
+def field_compare_fuzzy(a, b, fuzzy_threshold=0.8):
     return top_token_set_ratio(a, b) > fuzzy_threshold
 
 

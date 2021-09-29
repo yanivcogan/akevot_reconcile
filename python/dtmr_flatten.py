@@ -8,13 +8,18 @@ import os
 import merge_functions
 import flag_functions
 
-csv.field_size_limit(sys.maxsize)
-test = sys.maxsize
+maxInt = sys.maxsize
+while True:
+    try:
+        csv.field_size_limit(maxInt)
+        break
+    except OverflowError:
+        maxInt = int(maxInt/10)
 
 
 # File location section:
 directory = './data'  # modify this to match your directory structure including file names
-data_file = directory + os.sep + 'deciphering-the-military-rule-classifications.csv'  # modify as needed
+data_file = directory + os.sep + 'deciphering-the-military-rule-classifications (14).csv'  # modify as needed
 
 debug = {'doc': '44410798', 'q': 'title'}
 
