@@ -276,9 +276,13 @@ textarea, input{
 .doc-table-wrap tbody td{
 	cursor: pointer;
 	background: #eef;
+	padding: 0 0.5em;
 }
 .doc-table-wrap tbody td:hover{
 	filter: brightness(80%);
+}
+.doc-table-wrap a{
+	text-decoration: unset;
 }
 .doc-display{
 	display: flex;

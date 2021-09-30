@@ -59,7 +59,9 @@
 <tr ng-repeat="d in docs" ng-click="goToPage(d.id)">
 	<td>
 	<a href=".#!/doc/{{d.id}}">
-		{{d.title.trim().length>0?d.title:"אין כותרת"}}
+		<span>{{d.id}}</span>
+		<span> - </span>
+		<span>{{d.title.trim().length>0?d.title:"אין כותרת"}}</span>
 	</a>
 	</td>
 <tr>
