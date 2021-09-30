@@ -17,6 +17,9 @@ function($scope, $stateParams, $rootScope, $state, server){
 		$scope.raised_flags = $stateParams.raised?JSON.parse($stateParams.raised):{};
 		$scope.unraised_flags = $stateParams.unraised?JSON.parse($stateParams.unraised):{};
 		const statuses = $stateParams.statuses?JSON.parse($stateParams.statuses):{};
+		$scope.docStatusOptions.forEach(s=>{
+			s.selected = statuses.indexOf(s.val) >= 0;
+		})
 	};
 	$scope.initializeSearch();
 	$scope.getDocs = function(){
