@@ -21,6 +21,7 @@ function($scope, $stateParams, $rootScope, $state, server, imageIndex) {
 	$scope.pages = imageIndex.getPages($stateParams["docId"]);
 	$scope.currPage = 0;
 	$scope.imgControls = {brightness: 100, contrast: 100, saturation: 100}
+	$scope.expandedView = false;
 
 
 	$scope.saveInProgress = false;
@@ -137,6 +138,9 @@ function($scope, $stateParams, $rootScope, $state, server, imageIndex) {
 				}
 			}
 		}
+		$state.go('list', $rootScope.latestQuery);
+	}
+	$scope.backToSearch = function(){
 		$state.go('list', $rootScope.latestQuery);
 	}
 	$scope.goToPage = function(pageNum){

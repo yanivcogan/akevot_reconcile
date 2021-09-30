@@ -29,7 +29,7 @@ textarea, input{
 	outline: none;
 	font-weight: bold;
 	background: #ccc;
-	width: 2em;
+	min-width: 2em;
 	height: 2em;
 	cursor: pointer;
 }
