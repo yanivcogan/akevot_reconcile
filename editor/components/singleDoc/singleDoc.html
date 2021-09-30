@@ -3,13 +3,19 @@
 <h2>document #{{document.data.id}}</h2>
 <button type="button" ng-click="continueToNextDoc()"><</button>
 </div>
-<div class="table-wrap">
+<div class="table-wrap compact-view">
 <table class="reconcile-table" ng-class="{'focus-mode':focusedBlock}">
 <thead ng-click="unsetBlockFocus()">
 <tr>
 	<th ng-repeat="(k, q) in document.data.annotations">
 		<div dir="ltr">
-		{{q.label}}
+			<span>{{q.label}}</span>
+			<span>
+				(
+				<span>{{q.reconciled.length}},</span>
+				<span ng-repeat="(j, u) in document.data.users">{{q.answers[u].answers.length}}<span ng-show="!$last">,</span></span>
+				)
+			</span>
 		</div>
 	</th>
 </tr>
@@ -70,4 +76,26 @@
 	<select ng-model="document.status" ng-options="s.val as s.label for s in docStatusOptions"></select>
 	<button type="button" ng-click="saveDoc()">שמירה</button>
 	<span ng-show="saveSuccessful">השמירה הצליחה! מעבר אוטמטי למסמך הבא ייתבצע עוד מעט</span>
+</div>
+<div class="doc-display">
+	<button type="button" ng-click="goToPage(currPage-1)" ng-disabled="currPage <= 0"><</button>
+	<div>
+		<img alt="page-{{currPage}}" src="{{pages[currPage]}}" class="page-img"
+		ng-style="{'filter': 'brightness('+imgControls.brightness+'%) contrast('+imgControls.contrast+'%) saturate('+imgControls.saturation+'%)'}"/>
+		<div dir="ltr" class="page-img-controls">
+			<div>
+				<label>brightness</label>
+				<input type="range" min="20" max="160" step="1" ng-model="imgControls.brightness"/>
+			</div>
+			<div>
+				<label>contrast</label>
+				<input type="range" min="50" max="200" step="1" ng-model="imgControls.contrast"/>
+			</div>
+			<div>
+				<label>saturation</label>
+				<input type="range" min="0" max="100" step="1" ng-model="imgControls.saturation"/>
+			</div>
+		</div>
+	</div>
+	<button type="button" ng-click="goToPage(currPage+1)" ng-disabled="currPage >= (pages.length - 1)">></button>
 </div>

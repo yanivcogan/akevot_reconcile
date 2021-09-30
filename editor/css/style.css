@@ -119,6 +119,54 @@ textarea, input{
     resize: none;
 	padding: 1px 2px;
 }
+.compact-view .reconciled, .compact-view .user-answer{
+	display: block;
+	text-align: right;
+	/*noinspection CssInvalidPropertyValue*/
+	overflow-y: overlay;
+}
+.compact-view .block{
+	margin: 2px;
+	display: inline-block;
+	border: 1px solid black;
+}
+.compact-view .property{
+	display: inline-block;
+	padding: 0 3px;
+	min-height: calc(6px + 1em);
+	vertical-align: bottom;
+	border-left: 1px solid black;
+}
+.compact-view .property:last-child{
+	border-left: none;
+}
+.compact-view .property label.property-label{
+	display: none;
+}
+.compact-view .property .property-value, .compact-view .property .property-input{
+	width: 100%;
+	border: none;
+}
+.compact-view .reconciled .property{
+	margin: 0;
+	padding: 0;
+	border-left: none;
+}
+.compact-view .reconciled .block{
+	border: none;
+	width: fit-content;
+}
+.compact-view .reconciled .property .property-input{
+	margin: 0;
+	padding: 0;
+	min-height: 100%;
+	font-size: 1em;
+	width: 12.25em;
+	border: 1px solid black;
+}
+.compact-view .reconciled .property textarea.property-input {
+	width: 24.5em;
+}
 .reconcile-table:not(.focus-mode) .user-answer .block:hover{
 	background-color: #60c0e6;
 }
@@ -231,4 +279,26 @@ textarea, input{
 }
 .doc-table-wrap tbody td:hover{
 	filter: brightness(80%);
+}
+.doc-display{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.doc-display button{
+	width: 2em;
+	font-size: 3em;
+	font-weight: bold;
+	cursor: pointer;
+}
+.doc-display button:disabled{
+	cursor: no-drop;
+}
+.doc-display .page-img-controls label{
+	width: 5em;
+	display: inline-block;
+}
+.page-img{
+	height: 100vh;
 }

@@ -21,7 +21,7 @@ while True:
 directory = './data'  # modify this to match your directory structure including file names
 data_file = directory + os.sep + 'deciphering-the-military-rule-classifications (14).csv'  # modify as needed
 
-debug = {'doc': '44410798', 'q': 'title'}
+debug = {'doc': '44410590', 'q': 'institution_list'}
 
 classifications = {}
 flags = [
@@ -308,7 +308,8 @@ questions = {
                 {
                     'string': lambda x: x['institution'],
                     'ignore': merge_functions.empty_str_clean,
-                    'cmp': merge_functions.field_compare_fuzzy
+                    'cmp': merge_functions.field_compare_fuzzy,
+                    'cmp_args': {"fuzzy_threshold": 80}
                 }
             ]
         ],
@@ -349,6 +350,8 @@ questions = {
 
 # Function definitions needed for any blocks.
 def include(class_record):
+    if not class_record['subject_ids'] or not len(class_record['subject_ids']):
+        return False
     if int(class_record['workflow_id']) == 13195:
         pass
     else:

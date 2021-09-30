@@ -1,5 +1,5 @@
-app.controller('singleDoc', ['$scope', '$stateParams', '$rootScope', '$state', 'server',
-function($scope, $stateParams, $rootScope, $state, server) {
+app.controller('singleDoc', ['$scope', '$stateParams', '$rootScope', '$state', 'server', 'imageIndex',
+function($scope, $stateParams, $rootScope, $state, server, imageIndex) {
 	$scope.objectKeys = (a)=>Object.keys(a).filter(x=>["$$hashKey", "isFocused"].indexOf(x)===-1);
 	$scope.focusedBlock = {};
 	$scope.currentDocument = 0;
@@ -16,6 +16,11 @@ function($scope, $stateParams, $rootScope, $state, server) {
 	//the "title" attribute is the second in the array
 	$scope.title_index = 1;
 	$scope.docId = $stateParams["docId"];
+
+
+	$scope.pages = imageIndex.getPages($stateParams["docId"]);
+	$scope.currPage = 0;
+	$scope.imgControls = {brightness: 100, contrast: 100, saturation: 100}
 
 
 	$scope.saveInProgress = false;
@@ -133,5 +138,8 @@ function($scope, $stateParams, $rootScope, $state, server) {
 			}
 		}
 		$state.go('list', $rootScope.latestQuery);
+	}
+	$scope.goToPage = function(pageNum){
+		$scope.currPage = Math.min(Math.max(pageNum, 0), $scope.pages.length - 1)
 	}
 }]);
