@@ -16,10 +16,17 @@ function($scope, $stateParams, $rootScope, $state, server){
 		$scope.search.term = $stateParams.search?$stateParams.search:"";
 		$scope.raised_flags = $stateParams.raised?JSON.parse($stateParams.raised):{};
 		$scope.unraised_flags = $stateParams.unraised?JSON.parse($stateParams.unraised):{};
-		const statuses = $stateParams.statuses?JSON.parse($stateParams.statuses):{};
+		const statuses = $stateParams.statuses?JSON.parse($stateParams.statuses):[];
 		$scope.docStatusOptions.forEach(s=>{
 			s.selected = statuses.indexOf(s.val) >= 0;
 		})
+		if(!statuses.length){
+			$scope.docStatusOptions = [
+				{val:"PENDING", label:"חדש", selected: true},
+				{val:"FINISHED", label:"הושלם", selected: false},
+				{val:"INPROGRESS", label:"נותרה עבודה", selected: true}
+			];
+		}
 	};
 	$scope.initializeSearch();
 	$scope.getDocs = function(){
