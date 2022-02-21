@@ -92,4 +92,16 @@ function($scope, $stateParams, $rootScope, $state, server){
 	$scope.goToPage = function(id){
 		$state.transitionTo('singleDoc', { docId: id })
 	}
+	$scope.exportDocs = function(id){
+		server.requestPhp(data, 'list_docs').then(function (data) {
+			$scope.docs = data;
+			$rootScope.latestQuery = {
+				search : search,
+				raised : JSON.stringify($scope.raised_flags),
+				unraised : JSON.stringify($scope.unraised_flags),
+				statuses : JSON.stringify(statuses)
+			};
+			$rootScope.latestQueryResults = $scope.docs;
+		});
+	}
 }]);
