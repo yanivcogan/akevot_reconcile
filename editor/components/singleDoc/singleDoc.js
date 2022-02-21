@@ -3,7 +3,7 @@ function($scope, $stateParams, $rootScope, $state, server, imageIndex) {
 	$scope.objectKeys = (a)=>Object.keys(a).filter(x=>["$$hashKey", "isFocused"].indexOf(x)===-1);
 	$scope.focusedBlock = {};
 	$scope.currentDocument = 0;
-	$scope.tags = ["תשתיות", "אכיפת חוק", "פשעים","מינויי לתפקיד","השתלטות על שטחים"];
+	$scope.tags = [];
 	$scope.currTag = {};
 	$scope.selectedTags = [];
 	$scope.document = {};
@@ -30,11 +30,15 @@ function($scope, $stateParams, $rootScope, $state, server, imageIndex) {
 	server.requestPhp({id: $scope.docId}, 'get_doc').then(function (data) {
 		$scope.document.data = JSON.parse(data.json);
 		$scope.document.status = data.status === "PENDING" ? "FINISHED" : data.status;
+		$scope.selectedTags = data.tags.map(x=>x.tag);
 		window.setTimeout(()=>{
 			document.querySelectorAll("textarea.property-input").forEach(x=>{
 				x.dispatchEvent(new Event('input', { bubbles: true }))
 			})
 		}, 1000)
+	});
+	server.requestPhp({}, 'get_tags').then(function (data) {
+		$scope.tags = data.map(x=>x.tag);
 	});
 	$scope.setBlockFocus=function(q, b){
 		$scope.unsetBlockFocus();
@@ -105,8 +109,9 @@ function($scope, $stateParams, $rootScope, $state, server, imageIndex) {
 		let title = $scope.document.data.annotations[$scope.title_index].reconciled[0].title;
 		let json = JSON.stringify($scope.document.data);
 		let status = $scope.document.status;
+		let selectedTags = $scope.selectedTags;
 		$scope.saveInProgress = true;
-		server.requestPhp({id: $stateParams["docId"], title, json, status}, 'save_doc').then(function (data) {
+		server.requestPhp({id: $stateParams["docId"], title, json, status, selectedTags}, 'save_doc').then(function (data) {
 			$scope.saveInProgress = false;
 			$scope.saveSuccessful = true;
 			window.setTimeout($scope.continueToNextDoc, 1000);

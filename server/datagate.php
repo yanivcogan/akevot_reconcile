@@ -122,6 +122,13 @@ switch ($type) {
 			'par' => array('id' => ($data->id)),
 			'ret' => 'assoc'
 		));
+
+		$tags = $db->smartQuery(array(
+			'sql' => "SELECT t.tag FROM doc_tags AS dt JOIN tags AS t on dt.tag_id = t.id WHERE dt.doc_id=:id",
+			'par' => array('id' => ($data->id)),
+			'ret' => 'all'
+		));
+		$ans["tags"] = $tags;
 		break;
 	case "save_doc" :
 		$ans = $db->smartQuery(array(
@@ -131,6 +138,76 @@ switch ($type) {
 			'par' => array('id' => ($data->id),'json' => ($data->json),'status' => ($data->status),'title' => ($data->title)),
 			'ret' => 'res'
 		));
+		/* save tags */
+		/* empty existing list of tags associated with the document */
+		$ans = $db->smartQuery(array(
+			'sql' => "DELETE FROM doc_tags WHERE doc_id = :id",
+			'par' => array('id' => ($data->id)),
+			'ret' => 'res'
+		));
+		if(count($data->selectedTags) <= 0){
+		    break;
+		}
+		/* save new tags to tag table */
+		$updateTagList = "INSERT IGNORE INTO tags (tag) VALUES ";
+		$tags = array();
+		foreach ($data->selectedTags as $key => $tag){
+		    $tags["tag_".$key] = $tag;
+		    $updateTagList .= "(:tag_".$key.")";
+		    if($key < count($data->selectedTags) - 1){
+		        $updateTagList .= ", ";
+		    }
+        }
+		$tags = $db->smartQuery(array(
+                			'sql' => $updateTagList,
+                			'par' => $tags,
+                			'ret' => 'all'
+                		));
+        /* get ids of all relevant tags */
+        $getTagIds = "SELECT id FROM tags WHERE tag in(";
+        $tags = array();
+        foreach ($data->selectedTags as $key => $tag){
+            $tags["tag_".$key] = $tag;
+            $getTagIds .= ":tag_".$key."";
+            if($key < count($data->selectedTags) - 1){
+        		$getTagIds .= ", ";
+        	}
+        }
+        $getTagIds .= ")";
+        $tags = $db->smartQuery(array(
+                        			'sql' => $getTagIds,
+                        			'par' => $tags,
+                        			'ret' => 'all'
+                        		));
+        $insertDocTags = "INSERT INTO doc_tags (doc_id, tag_id) VALUES ";
+        $params = array("doc_id" => ($data->id));
+        foreach ($tags as $key => $tag){
+            $params["tag_".$key] = $tag["id"];
+            $insertDocTags .= "(:doc_id, :tag_".$key.")";
+            if($key < count($tags) - 1){
+        		$insertDocTags .= ", ";
+        	}
+        }
+        $tags = $db->smartQuery(array(
+                        			'sql' => $insertDocTags,
+                        			'par' => $params,
+                        			'ret' => 'res'
+                        		));
 		break;
+	case "get_tags" :
+		$ans = $db->smartQuery(array(
+			'sql' => "SELECT id, tag FROM tags",
+			'par' => array(),
+			'ret' => 'all'
+		));
+		break;
+
+	case "export_docs" :
+    	$ans = $db->smartQuery(array(
+    		'sql' => "SELECT id, title, status, IFNULL(adjusted_json, original_json) AS json FROM docs",
+    		'par' => array('id' => ($data->id)),
+    		'ret' => 'all'
+    	));
+        break;
 }
 echo json_encode($ans);
