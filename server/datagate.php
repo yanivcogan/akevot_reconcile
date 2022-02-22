@@ -205,7 +205,7 @@ switch ($type) {
 	case "export_docs" :
     	$ans = $db->smartQuery(array(
     		'sql' => "SELECT id, title, status, IFNULL(adjusted_json, original_json) AS json FROM docs",
-    		'par' => array('id' => ($data->id)),
+    		'par' => array(),
     		'ret' => 'all'
     	));
         break;

@@ -92,16 +92,19 @@ function($scope, $stateParams, $rootScope, $state, server){
 	$scope.goToPage = function(id){
 		$state.transitionTo('singleDoc', { docId: id })
 	}
-	$scope.exportDocs = function(id){
-		server.requestPhp(data, 'list_docs').then(function (data) {
-			$scope.docs = data;
-			$rootScope.latestQuery = {
-				search : search,
-				raised : JSON.stringify($scope.raised_flags),
-				unraised : JSON.stringify($scope.unraised_flags),
-				statuses : JSON.stringify(statuses)
-			};
-			$rootScope.latestQueryResults = $scope.docs;
+	$scope.exportDocs = function(){
+		server.requestPhp({}, 'export_docs').then(function (data) {
+			let docs = data;
+			docs = docs.map(d=>{
+				let x = JSON.parse(d.json);
+				let row = {};
+				row.id = x.id;
+				x.annotations.forEach(a=>{
+					row[a.question] = a.reconciled.map(ans=>JSON.stringify(ans).replaceAll(",", "|")).join("#");
+				})
+				return Object.values(row).join("^")
+			})
+			console.log(docs.join("\n"));
 		});
 	}
 }]);
