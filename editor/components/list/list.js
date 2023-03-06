@@ -100,11 +100,40 @@ function($scope, $stateParams, $rootScope, $state, server){
 				let row = {};
 				row.id = x.id;
 				x.annotations.forEach(a=>{
-					row[a.question] = a.reconciled.map(ans=>JSON.stringify(ans).replaceAll(",", "|")).join("#");
+					row[a.question] = a.reconciled.map(ans=>{
+						let ansFields = Object.values(ans);
+						let s = "";
+						if(ansFields.length == 1){
+							s = ansFields[0];
+						}
+						if(ansFields.length == 2){
+							s = ansFields[1] + "|" + ansFields[0];
+						}
+						if(ansFields.length == 4){
+							s = ansFields[1] + "|" + ansFields[0] + "%" + ansFields[2] + "|" + ansFields[3];
+						}
+						return JSON.stringify(s.replaceAll(",", "COMMA"));
+					}).join("#");
 				})
 				return Object.values(row).join("^")
 			})
-			console.log(docs.join("\n"));
+			let csvContent = docs.join("\n");
+			let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+			if (navigator.msSaveBlob) { // IE 10+
+				navigator.msSaveBlob(blob, filename);
+			} else {
+				let link = document.createElement("a");
+				if (link.download !== undefined) { // feature detection
+					// Browsers that support HTML5 download attribute
+					var url = URL.createObjectURL(blob);
+					link.setAttribute("href", url);
+					link.setAttribute("download", "export_reconciled.csv");
+					link.style.visibility = 'hidden';
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+				}
+			}
 		});
 	}
 }]);
